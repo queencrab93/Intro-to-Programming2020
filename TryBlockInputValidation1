@@ -1,0 +1,23 @@
+import requests
+import os
+from datetime import datetime 
+
+def main():
+    userkey=("a6fcce494ce0c664ed5b48eaa1af926f")
+    locationcity=input("Enter the city name or zip code of which you would like to view the current weather conditions.")
+
+    completeapilinkcity="https://api.openweathermap.org/data/2.5/weather?q="+locationcity+"&appid="+userkey
+    api_link=requests.get(completeapilinkcity)
+    api_datainfo=api_link.json()
+    try:
+        temperature=((api_datainfo['main']['temp']) -273.25)
+        weatherdescription=api_datainfo['weather'][0]['description']
+        print  ('-----------')
+        print ("The weather is as follows...", weatherdescription)
+        print("Current temperature is: {:.2f} degrees Celcius".format(temperature))
+    except:
+        print("I am unable to locate this.")
+while True:
+    main()
+    if input("Would you like to check another city or zipcode? (Y/N)").strip().upper() != 'Y':
+        break
